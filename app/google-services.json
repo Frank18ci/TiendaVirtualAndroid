@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "448430857285",
+    "project_id": "mytiendavirtual-269cf",
+    "storage_bucket": "mytiendavirtual-269cf.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:448430857285:android:642bde4299ff05b2cc972c",
+        "android_client_info": {
+          "package_name": "com.carpio.mytiendavirtual"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZXGs8PeyHrFAFspUIjGjhUXmLb2ZYKzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,11 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.MyTiendaVirtual" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.MyTiendaVirtual" parent="Base.Theme.MyTiendaVirtual" />
+    <item name="windowActionBar" type="bool">false</item>
+    <item name="windowNoTitle" type="bool">true</item>
+</resources>
