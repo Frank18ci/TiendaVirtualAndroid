@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+             android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/md_theme_primary"
+            android:textStyle="bold"
+            android:textSize="32sp"
+            android:text="Editar Informacion"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputNombres"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:boxStrokeColor="@color/md_theme_primary"
+            app:cursorColor="@color/md_theme_primary"
+            app:hintTextColor="@color/md_theme_primary">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tietNombres"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Nombres"
+                android:inputType="textPersonName" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputApellidos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:boxStrokeColor="@color/md_theme_primary"
+            app:cursorColor="@color/md_theme_primary"
+            app:hintTextColor="@color/md_theme_primary">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tietApellidos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Apellidos"
+                android:inputType="textPersonName" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputFechaNacimiento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:boxStrokeColor="@color/md_theme_primary"
+            app:cursorColor="@color/md_theme_primary"
+            app:hintTextColor="@color/md_theme_primary">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tietFechaNacimiento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="false"
+                android:hint="Fecha de nacimiento"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputNumero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:boxStrokeColor="@color/md_theme_primary"
+            app:cursorColor="@color/md_theme_primary"
+            app:hintTextColor="@color/md_theme_primary">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputNumeroV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="false"
+                android:hint="Telefono"
+                android:inputType="phone" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputDireccion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:boxStrokeColor="@color/md_theme_primary"
+            app:cursorColor="@color/md_theme_primary"
+            app:hintTextColor="@color/md_theme_primary">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputDireccionV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="false"
+                android:hint="Direccion"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_botones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:padding="10dp"
+        android:paddingTop="0dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+
+
+        <Button
+            android:id="@+id/btnAceptar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/md_theme_primary"
+            android:fontFamily="sans-serif-medium"
+            android:text="Aceptar"
+            android:textColor="@color/white" />
+        <Button
+            android:id="@+id/btnCancelar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/google_red"
+            android:fontFamily="sans-serif-medium"
+            android:text="Cancelar"
+            android:textColor="@color/black" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

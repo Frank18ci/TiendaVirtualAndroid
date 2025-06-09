@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    tools:context=".InformacionUsuarioFragment">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:text="Datos del Usuario"
+        android:textStyle="bold"
+        android:textColor="@color/md_theme_primary"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnEditarInformacionUsuario"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnEditarInformacionUsuario"
+        app:layout_constraintVertical_bias="0.482" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnEditarInformacionUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/black"
+        android:layout_marginEnd="10dp"
+        android:text="Editar Informacion"
+        android:textColor="@color/text_on_primary"
+        app:cornerRadius="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvNombres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Nombres:"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/tvNombresV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_secondary"
+        android:textStyle="bold"
+        android:text="Eve"
+        app:layout_constraintStart_toStartOf="@+id/tvNombres"
+        app:layout_constraintTop_toBottomOf="@+id/tvNombres" />
+
+    <TextView
+        android:id="@+id/tvApellidos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Apellidos:"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/tvNombresV" />
+
+    <TextView
+        android:id="@+id/tvApellidosV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_secondary"
+        android:textStyle="bold"
+        android:text="Ca"
+        app:layout_constraintStart_toStartOf="@+id/tvApellidos"
+        app:layout_constraintTop_toBottomOf="@+id/tvApellidos" />
+
+    <TextView
+        android:id="@+id/tvCorreoE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Correo Electronico:"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/tvApellidosV" />
+
+    <TextView
+        android:id="@+id/tvCorreoEV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_secondary"
+        android:textStyle="bold"
+        android:text="gmail"
+        app:layout_constraintStart_toStartOf="@+id/tvCorreoE"
+        app:layout_constraintTop_toBottomOf="@+id/tvCorreoE" />
+
+    <TextView
+        android:id="@+id/tvFechaN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Fecha de Nacimiento:"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/tvCorreoEV" />
+
+    <TextView
+        android:id="@+id/tvFechaNV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_secondary"
+        android:textStyle="bold"
+        android:text="23/02/2005"
+        app:layout_constraintStart_toStartOf="@+id/tvFechaN"
+        app:layout_constraintTop_toBottomOf="@+id/tvFechaN" />
+
+    <TextView
+        android:id="@+id/tvDireccion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Direccion:"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/tvFechaNV" />
+
+    <TextView
+        android:id="@+id/tvDireccionV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_secondary"
+        android:textStyle="bold"
+        android:text="Direccion"
+        app:layout_constraintStart_toStartOf="@+id/tvDireccion"
+        app:layout_constraintTop_toBottomOf="@+id/tvDireccion" />
+
+    <TextView
+        android:id="@+id/tvNumeroT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Numero de Telefono:"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/tvDireccionV" />
+
+    <TextView
+        android:id="@+id/tvNumeroTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_secondary"
+        android:textStyle="bold"
+        android:text="982 232 232"
+        app:layout_constraintStart_toStartOf="@+id/tvNumeroT"
+        app:layout_constraintTop_toBottomOf="@+id/tvNumeroT" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

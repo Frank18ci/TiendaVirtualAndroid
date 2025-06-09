@@ -1,5 +1,6 @@
 package com.carpio.mytiendavirtual
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
@@ -8,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -30,6 +32,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         val toolbar: Toolbar = binding.appBar.toolbarHome
+
         setSupportActionBar(toolbar)
         drawer = binding.main
         toggle = ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -41,19 +44,20 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView.setNavigationItemSelectedListener(this)
 
 
+
         val navigationBottom = binding.bottomNavigationHome
         navigationBottom.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.item_menu_productos -> {
+                R.id.item_menu_inicio -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.fcvHome, ListaProductosFragment())
+                        .replace(R.id.fcvHome, HomeFragment())
                         .addToBackStack(null)
                         .commit()
                     true
                 }
-                R.id.item_menu_inicio -> {
+                R.id.item_menu_productos -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.fcvHome, HomeFragment())
+                        .replace(R.id.fcvHome, ListaProductosFragment())
                         .addToBackStack(null)
                         .commit()
                     true
@@ -73,9 +77,28 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.nav_item_one -> Toast.makeText(this, "Nav 1", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_two -> Toast.makeText(this, "Nav 2", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_three -> Toast.makeText(this, "Nav 3", Toast.LENGTH_SHORT).show()
+            R.id.nav_lateral_informacion_usuario -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fcvHome, InformacionUsuarioFragment())
+                    .addToBackStack(null)
+                    .commit()
+            }
+            R.id.nav_lateral_pedidos_realizados -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fcvHome, PedidosRealizadosFragment())
+                    .addToBackStack(null)
+                    .commit()
+            }
+            R.id.nav_lateral_configuracion -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fcvHome, ConfiguracionUsuarioFragment())
+                    .addToBackStack(null)
+                    .commit()
+            }
+            R.id.nav_lateral_salir_de_cuenta -> {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
 
         }
         drawer.closeDrawer(GravityCompat.START)

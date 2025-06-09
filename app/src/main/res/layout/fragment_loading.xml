@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".LoadingFragment">
 
     <com.airbnb.lottie.LottieAnimationView
@@ -23,9 +24,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tienda Virtual"
+        android:textColor="@color/md_theme_primary"
         android:textStyle="bold"
-        android:textSize="24sp"
-        android:textColor="@color/cardview_dark_background"
+        android:textSize="32sp"
         app:layout_constraintBottom_toTopOf="@+id/lottieAnimationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
