@@ -30,7 +30,7 @@ class LoginFragment : Fragment() {
         }
         binding.btnIniciarSesion.setOnClickListener {
             val database = FirebaseDatabase.getInstance();
-            val myRef = database.getReference("categorias")
+            val myRef = database.getReference("categoriasssss")
             myRef.child("1").get().addOnSuccessListener { snapshot ->
                 val valor = snapshot.getValue(Categoria::class.java)
                 Log.d("categoria 1",  valor.toString())
