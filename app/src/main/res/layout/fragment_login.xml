@@ -4,30 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    android:padding="20dp"
+    android:background="@color/background"
     tools:context=".LoginFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="20dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <TextView
             android:id="@+id/tvIniciarSeion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/md_theme_primary"
+            android:textStyle="bold"
+            android:textSize="32sp"
             android:text="Iniciar Sesion"
-            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:textStyle="italic"
+            android:textColor="@color/text_secondary"
+            android:text="@string/descubre_lo_nuevo_en_productos"
+            android:layout_height="wrap_content" />
 
         <com.google.android.material.textfield.TextInputLayout
+            app:boxStrokeColor="@color/md_theme_primary"
+            app:hintTextColor="@color/md_theme_primary"
+            app:cursorColor="@color/md_theme_primary"
             android:id="@+id/textInputCorreo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,10 +53,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Correo electronico"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            app:boxStrokeColor="@color/md_theme_primary"
+            app:hintTextColor="@color/md_theme_primary"
             android:id="@+id/textInputPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,22 +81,39 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:backgroundTint="#2196F3"
-            android:text="Iniciar Sesion"
+            android:backgroundTint="@color/md_theme_primary"
+            android:textColor="@color/text_on_primary"
             app:cornerRadius="16dp"
+            android:text="Iniciar Sesión"
             app:layout_constraintEnd_toEndOf="@+id/textInputPassword"
             app:layout_constraintStart_toStartOf="@+id/textInputPassword"
             app:layout_constraintTop_toBottomOf="@+id/textInputPassword" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLoginGoogle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/black"
+            app:icon="@drawable/google_icon_svgrepo_com"
+            android:text="Iniciar sesión con Google"
+            android:textColor="@color/text_on_primary"
+            app:cornerRadius="16dp"
+            app:layout_constraintEnd_toEndOf="@+id/btnIniciarSesion"
+            app:layout_constraintStart_toStartOf="@+id/btnIniciarSesion"
+            app:layout_constraintTop_toBottomOf="@+id/btnIniciarSesion" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCrearCuenta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:backgroundTint="#2146F1"
+            android:backgroundTint="@color/button_secondary"
             android:text="Crear Cuenta"
+            android:textColor="@color/text_on_primary"
             app:cornerRadius="16dp"
-            app:layout_constraintEnd_toEndOf="@+id/btnIniciarSesion"
-            app:layout_constraintStart_toStartOf="@+id/btnIniciarSesion"
-            app:layout_constraintTop_toBottomOf="@+id/btnIniciarSesion" />
+            app:layout_constraintEnd_toEndOf="@+id/btnLoginGoogle"
+            app:layout_constraintStart_toStartOf="@+id/btnLoginGoogle"
+            app:layout_constraintTop_toBottomOf="@+id/btnLoginGoogle" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.carpio.mytiendavirtual.adapter.ProductosAdapter
@@ -46,6 +48,12 @@ class ListaProductosFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentListaProductosBinding.inflate(inflater, container, false)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
         val listaProductos = mutableListOf<Producto>()
         binding.rvProductos.layoutManager= LinearLayoutManager(context)
         val database = FirebaseDatabase.getInstance();
