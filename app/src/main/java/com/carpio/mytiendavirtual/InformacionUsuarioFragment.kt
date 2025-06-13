@@ -147,10 +147,10 @@ class InformacionUsuarioFragment : Fragment() {
             }
 
             val nuevosDatos = mapOf(
-                "nombres" to (tietNombres.text?.toString() ?: ""),
-                "apellidos" to (tietApellidos.text?.toString() ?: ""),
+                "nombre" to (tietNombres.text?.toString() ?: ""),
+                "apellido" to (tietApellidos.text?.toString() ?: ""),
                 "fechaNacimiento" to com.google.firebase.Timestamp(fechaDate),
-                "telefono" to (tietTelefono.text?.toString() ?: ""),
+                "numero" to (tietTelefono.text?.toString() ?: ""),
                 "direccion" to (tietDireccion.text?.toString() ?: "")
             )
 

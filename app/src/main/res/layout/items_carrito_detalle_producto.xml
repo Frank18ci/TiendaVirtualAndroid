@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/ivProducto"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:src="@drawable/ic_launcher_background" />
+
+    <TextView
+        android:id="@+id/tvProductoNombre"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintStart_toEndOf="@id/ivProducto"
+        app:layout_constraintTop_toTopOf="@id/ivProducto"
+        android:layout_marginTop="10dp"
+        app:layout_constraintHorizontal_bias="0"
+        android:layout_marginStart="12dp"
+        tools:text="Nombre Producto" />
+    <TextView
+        android:id="@+id/tvCategoria"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        android:textColor="?android:attr/textColorSecondary"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintStart_toStartOf="@id/tvProductoNombre"
+        app:layout_constraintTop_toBottomOf="@id/tvProductoNombre"
+        app:layout_constraintEnd_toEndOf="@id/tvProductoNombre"
+        tools:text="Categoría" />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvPrecio"
+        android:textSize="14sp"
+        android:textColor="?android:attr/textColorSecondary"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintStart_toStartOf="@id/tvProductoNombre"
+        app:layout_constraintTop_toBottomOf="@id/tvCategoria"
+        app:layout_constraintEnd_toEndOf="@id/tvProductoNombre"
+        tools:text="Precio: S/ 0.00" />
+    <TextView
+        android:id="@+id/tvSubtotal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="?android:attr/textColorSecondary"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintStart_toStartOf="@id/tvProductoNombre"
+        app:layout_constraintTop_toBottomOf="@id/tvPrecio"
+        app:layout_constraintEnd_toEndOf="@id/tvProductoNombre"
+        tools:text="Subtotal: S/ 0.00" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnRestarCantidad"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:cornerRadius="20dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="@color/background"
+        android:text=""
+        app:icon="@drawable/dash"
+        app:iconTint="@color/black"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvCantidad"
+        app:layout_constraintEnd_toStartOf="@+id/tvCantidad"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/tvCategoria"
+        app:layout_constraintTop_toTopOf="@+id/tvCantidad" />
+
+    <TextView
+        android:id="@+id/tvCantidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginEnd="12dp"
+
+
+        android:text="1"
+
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/btnSumarCantidad"
+        app:layout_constraintEnd_toStartOf="@+id/btnSumarCantidad"
+        app:layout_constraintTop_toTopOf="@+id/btnSumarCantidad" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSumarCantidad"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="56dp"
+
+        android:backgroundTint="@color/background"
+        android:text=""
+        app:icon="@drawable/plus"
+        app:iconTint="@color/black"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnEliminar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:cornerRadius="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/google_red"
+        android:text=""
+        app:icon="@drawable/baseline_delete_24"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:iconTint="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rippleColor="@color/google_red" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

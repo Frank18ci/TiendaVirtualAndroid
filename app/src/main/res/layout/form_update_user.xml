@@ -88,7 +88,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:focusable="false"
                 android:hint="Telefono"
                 android:inputType="phone" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -107,7 +106,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:focusable="false"
                 android:hint="Direccion"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
