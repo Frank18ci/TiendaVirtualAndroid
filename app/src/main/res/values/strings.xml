@@ -5,4 +5,7 @@
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>
     <string name="descubre_lo_nuevo_en_productos">Descubre lo nuevo en productos</string>
+
+    <!--<string name="default_web_client_id">448430857285-xxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com</string>-->
+    <string name="default_web_client_id">448430857285‑XYZ.apps.googleusercontent.com</string>
 </resources>
