@@ -11,18 +11,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Productos"
-        android:textSize="20sp"
+        android:layout_margin="8dp"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/svBuscarProducto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+    <SearchView
+        android:id="@+id/svBuscarProducto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:iconifiedByDefault="false"
+        android:queryHint="Buscar producto"
+        android:layout_margin="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvProductos"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toTopOf="@+id/rvProductos"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_chainStyle="spread"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvProductos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="100dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvProductos" />
+        app:layout_constraintTop_toBottomOf="@+id/svBuscarProducto" />
 </androidx.constraintlayout.widget.ConstraintLayout>

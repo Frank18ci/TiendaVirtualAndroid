@@ -42,9 +42,15 @@ class HomeFragment : Fragment() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        binding.irlistaproductos.setOnClickListener{
+        binding.btnVerProductos.setOnClickListener{
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fcvHome, ListaProductosFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+        binding.btnVerCarrito.setOnClickListener{
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fcvHome, CarritoFragment())
                 .addToBackStack(null)
                 .commit()
         }

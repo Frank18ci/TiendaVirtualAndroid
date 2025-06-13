@@ -35,7 +35,7 @@
             android:ellipsize="end"
             app:layout_constraintStart_toEndOf="@id/ivProducto"
             app:layout_constraintTop_toTopOf="@id/ivProducto"
-            app:layout_constraintEnd_toStartOf="@id/btnInfo"
+            app:layout_constraintEnd_toStartOf="@id/btnAgregarCarrito"
             app:layout_constraintHorizontal_bias="0"
             android:layout_marginStart="12dp"
             tools:text="Nombre Producto" />
@@ -64,16 +64,6 @@
             app:layout_constraintTop_toBottomOf="@id/tvCategoria"
             tools:text="$29.99" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnInfo"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Info"
-            app:iconGravity="textStart"
-            app:iconPadding="4dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAgregarCarrito"
@@ -83,8 +73,8 @@
             android:text="Agregar"
             app:iconGravity="textStart"
             app:iconPadding="6dp"
-            app:layout_constraintTop_toBottomOf="@id/btnInfo"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
