@@ -19,6 +19,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import android.graphics.Paint
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.carpio.mytiendavirtual.adapter.EtiquetasProductosAdapter
+import com.google.common.collect.Lists
 
 class DetalleProductoFragment : Fragment() {
 
@@ -73,6 +76,23 @@ class DetalleProductoFragment : Fragment() {
                 binding.tvPrecioAnterior.paintFlags = binding.tvPrecioAnterior.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
 
                 binding.tvCantidad.text = "Cantidad: ${productoDto.stock ?: 0}"
+
+                binding.rvEtiquetas.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                binding.rvEtiquetas.adapter = EtiquetasProductosAdapter(productoDto.etiquetas?: listOf())
+                binding.rvEtiquetas.setHasFixedSize(true)
+
+                binding.tvCantidadElegida.text = 1.toString();
+                binding.tvAumentarCantidadElegida.setOnClickListener {
+                    if(binding.tvCantidadElegida.text.toString().toInt() <= (productoDto.stock ?: 0)){
+                        binding.tvCantidadElegida.text = (binding.tvCantidadElegida.text.toString().toInt() + 1).toString()
+                    }
+                }
+                binding.tvDisminuirCantidadElegida.setOnClickListener {
+                    if (binding.tvCantidadElegida.text.toString().toInt() > 1) {
+                        binding.tvCantidadElegida.text = (binding.tvCantidadElegida.text.toString().toInt() - 1).toString()
+                    }
+                }
+
             } else {
                 binding.tvNombreProducto.text = "Producto no encontrado"
             }
@@ -84,6 +104,7 @@ class DetalleProductoFragment : Fragment() {
         binding.ivImagenBack.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
+
         return binding.root
     }
 

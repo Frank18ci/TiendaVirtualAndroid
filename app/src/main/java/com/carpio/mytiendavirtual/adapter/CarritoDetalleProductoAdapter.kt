@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.carpio.mytiendavirtual.R
-import com.carpio.mytiendavirtual.models.DetalleProducto
+import com.carpio.mytiendavirtual.models.DetalleCarrito
 
-class CarritoDetalleProductoAdapter(private val detalleProductos: List<DetalleProducto>) : Adapter<CarritoDetalleProductoViewHolder>() {
+class CarritoDetalleProductoAdapter(private val detalleProductos: List<DetalleCarrito>) : Adapter<CarritoDetalleProductoViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

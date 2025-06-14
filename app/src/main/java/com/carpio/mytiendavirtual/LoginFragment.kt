@@ -35,6 +35,10 @@ class LoginFragment : Fragment() {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         auth = FirebaseAuth.getInstance()
 
+        // Check if user is already logged in and redirect to HomeActivity
+        if(auth.currentUser != null) {
+            irAHome()
+        }
 
         googleClient = GoogleSignIn.getClient(
             requireActivity(),
