@@ -8,10 +8,9 @@ import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.carpio.mytiendavirtual.adapter.CarritoDetalleProductoAdapter
 import com.carpio.mytiendavirtual.databinding.FragmentCarritoBinding
-import com.carpio.mytiendavirtual.models.DetalleProducto
+import com.carpio.mytiendavirtual.models.DetalleCarrito
 import com.carpio.mytiendavirtual.models.Producto
 
 // TODO: Rename parameter arguments, choose names that match
@@ -50,9 +49,9 @@ class CarritoFragment : Fragment() {
         binding.rvCarrito.layoutManager = LinearLayoutManager(context)
         binding.rvCarrito.adapter = CarritoDetalleProductoAdapter(
             listOf(
-                DetalleProducto(1, Producto(1, 1, "Producto 1", listOf("hola"), "marca",4.2, "producto",2500.0,2559.0, 4.2, 10,"https://helios-i.mashable.com/imagery/articles/04NitPm35IH7OUre3FdqwKB/images-1.fill.size_2000x1366.v1681296423.jpg"), 2, 200.0),
-                DetalleProducto(2, Producto(2, 1, "Producto 2", listOf("hola"), "marca", 4.2, "producto",2500.0,2559.0, 4.2, 10,"https://helios-i.mashable.com/imagery/articles/04NitPm35IH7OUre3FdqwKB/images-1.fill.size_2000x1366.v1681296423.jpg"), 1, 150.0),
-                DetalleProducto(3, Producto(3, 1, "Producto 3", listOf("hola"), "marca",4.2, "producto",2500.0,2559.0, 4.2, 10,"https://helios-i.mashable.com/imagery/articles/04NitPm35IH7OUre3FdqwKB/images-1.fill.size_2000x1366.v1681296423.jpg"), 1, 300.0),
+                DetalleCarrito("1", 1, 2, 200.0),
+                DetalleCarrito("1", 1, 2, 200.0),
+                DetalleCarrito("1", 1, 2, 200.0),
             )
         )
 
