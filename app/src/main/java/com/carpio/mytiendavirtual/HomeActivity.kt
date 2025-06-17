@@ -41,9 +41,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
+
         val navigationView: NavigationView = binding.navView
         navigationView.setNavigationItemSelectedListener(this)
-
 
 
         val navigationBottom = binding.bottomNavigationHome
