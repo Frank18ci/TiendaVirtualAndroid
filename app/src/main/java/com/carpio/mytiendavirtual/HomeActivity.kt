@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,8 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    // TODO: Decirle que lo amo sin que lo note... oh muy tarde ❤️
 
     private lateinit var drawer: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
@@ -45,6 +48,27 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val navigationView: NavigationView = binding.navView
         navigationView.setNavigationItemSelectedListener(this)
 
+//------------Para que se muestre informacion del usuario uwu-------------------------------------------------//
+        val headerView = binding.navView.getHeaderView(0)
+        val nombreUsuarioTextView = headerView.findViewById<TextView>(R.id.nav_header_textView)
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        if (uid != null) {
+            val firestore = com.google.firebase.firestore.FirebaseFirestore.getInstance()
+            firestore.collection("usuarios").document(uid)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        val nombre = document.getString("nombre") ?: ""
+                        val apellido = document.getString("apellido") ?: ""
+                        nombreUsuarioTextView.text = "$nombre $apellido"
+                    }
+                }
+                .addOnFailureListener {
+                    nombreUsuarioTextView.text = "Usuario"
+                }
+        }
+//-------------------------LO DI TODO TE AMOOOO  <3--------------------------------------------------------------//
 
         val navigationBottom = binding.bottomNavigationHome
         navigationBottom.setOnItemSelectedListener { item ->
