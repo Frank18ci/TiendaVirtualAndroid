@@ -44,6 +44,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
+
         val navigationView: NavigationView = binding.navView
         navigationView.setNavigationItemSelectedListener(this)
 
@@ -68,7 +69,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
         }
 //-------------------------LO DI TODO TE AMOOOO  <3--------------------------------------------------------------//
-
 
         val navigationBottom = binding.bottomNavigationHome
         navigationBottom.setOnItemSelectedListener { item ->

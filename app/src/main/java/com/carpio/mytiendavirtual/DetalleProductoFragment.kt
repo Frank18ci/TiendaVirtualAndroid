@@ -19,9 +19,15 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import android.graphics.Paint
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.carpio.mytiendavirtual.adapter.EtiquetasProductosAdapter
+import com.carpio.mytiendavirtual.models.Carrito
+import com.carpio.mytiendavirtual.models.DetalleCarrito
 import com.google.common.collect.Lists
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 
 class DetalleProductoFragment : Fragment() {
 
@@ -91,6 +97,63 @@ class DetalleProductoFragment : Fragment() {
                     if (binding.tvCantidadElegida.text.toString().toInt() > 1) {
                         binding.tvCantidadElegida.text = (binding.tvCantidadElegida.text.toString().toInt() - 1).toString()
                     }
+                }
+
+                //Agregar al carrito
+                binding.btnAgregarCarrito.setOnClickListener {
+                    val usuario = FirebaseAuth.getInstance().currentUser
+                    var uid = ""
+                    if (usuario != null) {
+                        uid = usuario.uid
+                    }
+                    val cantidadElegida = binding.tvCantidadElegida.text.toString().toInt()
+                    if (cantidadElegida > (productoDto.stock ?: 0)) {
+                        Toast.makeText(requireContext(), "No hay suficientes unidades en stock", Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
+                    }
+                    val productoPrecioFinal = productoDto.precioFinal ?: 0.0
+                    val montoCarrito = productoPrecioFinal  * cantidadElegida
+                    val detalleCarrito = DetalleCarrito(
+                        productoId = productoDto.id,
+                        cantidad = cantidadElegida,
+                        monto = montoCarrito
+                    )
+                    val carrito = Carrito(
+                        uid = uid,
+                        detalleProductos = mutableListOf(detalleCarrito),
+                        total = (productoDto.precioFinal ?: 0.0) * cantidadElegida,
+                    )
+                    val databaseFirestore = FirebaseFirestore.getInstance()
+                    databaseFirestore.collection("carritos").document(uid)
+                        .get().addOnSuccessListener { document ->
+                            if (document.exists()) {
+                                // Si el carrito ya existe, actualizamos
+                                databaseFirestore.collection("carritos").document(uid).update(
+                                    "detalleProductos", FieldValue.arrayUnion(detalleCarrito),
+                                    "total", FieldValue.increment((productoDto.precioFinal ?: 0.0) * cantidadElegida)
+                                )
+                                    .addOnSuccessListener {
+                                        Toast.makeText(
+                                            requireContext(),
+                                            "Producto agregado al carrito",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                            } else {
+                                databaseFirestore.collection("carritos").document(uid)
+                                    .set(carrito)
+                                    .addOnSuccessListener {
+                                        Toast.makeText(
+                                            requireContext(),
+                                            "Producto agregado al carrito",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                            }
+                        }.addOnFailureListener { e ->
+                            Log.e("Error al agregar al carrito", e.message.toString())
+                            Toast.makeText(requireContext(), "Error al agregar al carrito", Toast.LENGTH_SHORT).show()
+                        }
                 }
 
             } else {

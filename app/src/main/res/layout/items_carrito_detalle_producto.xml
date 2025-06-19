@@ -35,10 +35,11 @@
         android:textStyle="italic"
         android:textColor="?android:attr/textColorSecondary"
         android:maxLines="1"
+        android:maxLength="9"
         android:ellipsize="end"
         app:layout_constraintStart_toStartOf="@id/tvProductoNombre"
         app:layout_constraintTop_toBottomOf="@id/tvProductoNombre"
-        app:layout_constraintEnd_toEndOf="@id/tvProductoNombre"
+
         tools:text="Categoría" />
     <TextView
         android:layout_width="0dp"
@@ -50,7 +51,7 @@
         android:ellipsize="end"
         app:layout_constraintStart_toStartOf="@id/tvProductoNombre"
         app:layout_constraintTop_toBottomOf="@id/tvCategoria"
-        app:layout_constraintEnd_toEndOf="@id/tvProductoNombre"
+
         tools:text="Precio: S/ 0.00" />
     <TextView
         android:id="@+id/tvSubtotal"
@@ -62,25 +63,20 @@
         android:ellipsize="end"
         app:layout_constraintStart_toStartOf="@id/tvProductoNombre"
         app:layout_constraintTop_toBottomOf="@id/tvPrecio"
-        app:layout_constraintEnd_toEndOf="@id/tvProductoNombre"
+
         tools:text="Subtotal: S/ 0.00" />
 
-    <com.google.android.material.button.MaterialButton
+    <TextView
         android:id="@+id/btnRestarCantidad"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        app:cornerRadius="20dp"
-        android:layout_marginEnd="8dp"
-        android:backgroundTint="@color/background"
-        android:text=""
-        app:icon="@drawable/dash"
-        app:iconTint="@color/black"
-        app:iconGravity="textStart"
-        app:iconPadding="0dp"
+        android:layout_marginEnd="4dp"
+        android:gravity="center"
+        android:text="-"
+        android:textSize="32sp"
+
         app:layout_constraintBottom_toBottomOf="@+id/tvCantidad"
         app:layout_constraintEnd_toStartOf="@+id/tvCantidad"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/tvCategoria"
         app:layout_constraintTop_toTopOf="@+id/tvCantidad" />
 
     <TextView
@@ -88,8 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginEnd="12dp"
-
+        android:layout_marginEnd="4dp"
 
         android:text="1"
 
@@ -99,21 +94,18 @@
         app:layout_constraintEnd_toStartOf="@+id/btnSumarCantidad"
         app:layout_constraintTop_toTopOf="@+id/btnSumarCantidad" />
 
-    <com.google.android.material.button.MaterialButton
+    <TextView
         android:id="@+id/btnSumarCantidad"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="56dp"
-
+        android:layout_marginEnd="4dp"
         android:backgroundTint="@color/background"
-        android:text=""
-        app:icon="@drawable/plus"
-        app:iconTint="@color/black"
-        app:iconGravity="textStart"
-        app:iconPadding="0dp"
+        android:gravity="center"
+        android:text="+"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnEliminar"

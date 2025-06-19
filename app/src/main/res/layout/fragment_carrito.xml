@@ -45,6 +45,8 @@
         android:text="Total a Pagar : S/ 0.00" />
 
     <com.google.android.material.button.MaterialButton
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:id="@+id/BtnPagar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
