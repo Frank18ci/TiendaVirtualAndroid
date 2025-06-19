@@ -17,6 +17,8 @@ import com.carpio.mytiendavirtual.models.Producto
 import com.carpio.mytiendavirtual.models.ProductoDTO
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 
 class ProductosViewHolder(val view: View) : ViewHolder(view) {
     val binding = ItemsProductoBinding.bind(view)
@@ -27,7 +29,7 @@ class ProductosViewHolder(val view: View) : ViewHolder(view) {
 
         binding.tvProductoNombre.text = producto.nombre
         binding.tvCategoria.text = producto.categoria
-        binding.tvPrecio.text = producto.precio.toString()
+        binding.tvPrecio.text = producto.precioFinal.toString()
         itemView.setOnClickListener{
             val bundle = Bundle()
             bundle.putString("id", producto.id.toString())
@@ -55,13 +57,16 @@ class ProductosViewHolder(val view: View) : ViewHolder(view) {
                 detalleProductos = mutableListOf(detalleCarrito),
                 total = producto.precioFinal ?: 0.0,
             )
-            val database = FirebaseDatabase.getInstance()
+            val database = FirebaseFirestore.getInstance()
+            database.collection("carritos").document(uid).
+            get().addOnSuccessListener { document ->
 
-            val refCarrito = database.getReference("carritos").child(uid)
-            refCarrito.get().addOnSuccessListener { snapshot ->
-                if (snapshot.exists()) {
+                if (document.exists()) {
                     // Si el carrito ya existe, actualizamos
-                    refCarrito.child("detalleProductos").push().setValue(detalleCarrito)
+                    database.collection("carritos").document(uid).update(
+                        "detalleProductos", FieldValue.arrayUnion(detalleCarrito),
+                        "total", FieldValue.increment(producto.precioFinal ?: 0.0)
+                    )
                         .addOnSuccessListener {
                             Toast.makeText(
                                 itemView.context,
@@ -69,9 +74,10 @@ class ProductosViewHolder(val view: View) : ViewHolder(view) {
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
+
                 } else {
-                    // Si no existe, creamos uno nuevo
-                    refCarrito.setValue(carrito)
+                    database.collection("carritos").document(uid).
+                    set(carrito)
                         .addOnSuccessListener {
                             Toast.makeText(
                                 itemView.context,
