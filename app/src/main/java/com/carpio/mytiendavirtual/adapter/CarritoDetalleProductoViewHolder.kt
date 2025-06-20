@@ -44,7 +44,7 @@ class CarritoDetalleProductoViewHolder(val view: View) : ViewHolder(view) {
                 ).show()
             }
         })
-        val producto =  FirebaseDatabase.getInstance().getReference("productos").child(detalleProducto.productoId.toString()).addValueEventListener(
+        FirebaseDatabase.getInstance().getReference("productos").child(detalleProducto.productoId.toString()).addValueEventListener(
             object: ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val producto = snapshot.getValue(Producto::class.java)
