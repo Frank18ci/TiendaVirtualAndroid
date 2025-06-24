@@ -116,10 +116,12 @@ class CarritoFragment : Fragment() {
     private suspend fun disminuirStockProductos(detalleProductos: List<DetalleCarrito>) {
 
         for (element in detalleProductos){
-            val ref = FirebaseDatabase.getInstance().getReference("productos").child(element.productoId.toString())
+            //verificar si el producto existe
+            val ref = FirebaseDatabase.getInstance().getReference("productos")
+                .child(element.productoId.toString())
                 .child("stock")
 
-                ref.runTransaction( object: Transaction.Handler {
+                ref.runTransaction( object : Transaction.Handler {
                         override fun doTransaction(currentData: MutableData): Transaction.Result {
                             val stockActual = currentData.getValue(Int::class.java) ?: return Transaction.success(currentData)
 
