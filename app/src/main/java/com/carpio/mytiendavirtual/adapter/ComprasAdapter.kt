@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.blue
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.carpio.mytiendavirtual.DetallePedidoRealizadoFragment
@@ -26,6 +28,15 @@ class ComprasAdapter(private val listaCompras : MutableList<Compra>) : Adapter<C
         fun render(compra: Compra){
             binding.textTotal.text = "S/. ${compra.total}"
             binding.tvEstado.text = compra.estado
+
+            // Color sucess #388E3C, Color pending #1976D2
+            val color: Int = if(compra.estado == "Pagado"){
+                ContextCompat.getColor(binding.root.context, R.color.color_success)
+            } else{
+                ContextCompat.getColor(binding.root.context, R.color.color_info)
+            }
+             binding.tvEstado.setTextColor(color)
+
             val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
             binding.tvFechaOrden.text = sdf.format(Date(compra.fechaCompra))
 

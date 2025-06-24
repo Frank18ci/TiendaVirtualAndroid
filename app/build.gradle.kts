@@ -40,6 +40,14 @@ android {
 }
 
 dependencies {
+    //implementacion retrofit y gson converter
+    implementation(libs.retrofit)
+    implementation(libs.converterGson)
+    //implementacion de okhttp
+    implementation(libs.okhttp3)
+    //Browser
+    implementation(libs.browser)
+
     //lotie
     implementation("com.airbnb.android:lottie:6.6.6")
 
