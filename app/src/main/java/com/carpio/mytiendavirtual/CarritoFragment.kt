@@ -13,7 +13,9 @@ import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.carpio.mytiendavirtual.adapter.CarritoDetalleProductoAdapter
 import com.carpio.mytiendavirtual.databinding.FragmentCarritoBinding
 import com.carpio.mytiendavirtual.models.Carrito
@@ -57,6 +59,8 @@ class CarritoFragment : Fragment() {
         }
         binding.rvCarrito.layoutManager = LinearLayoutManager(context)
 
+        val decoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
+        binding.rvCarrito.addItemDecoration(decoration)
 
 
         cargarLista()

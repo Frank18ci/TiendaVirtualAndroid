@@ -147,7 +147,6 @@ class DetallePedidoRealizadoFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        Log.d("ONresume", "actioooooooooooooooooooo")
         realizarPeticionObtenerCompra(compraCargada.id)
     }
     private fun disminuirStockProductos(detalleCompra: List<DetalleCompra>) {
