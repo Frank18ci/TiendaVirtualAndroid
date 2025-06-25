@@ -69,9 +69,9 @@ class CarritoFragment : Fragment() {
                     val linear = LinearLayout(requireContext())
                     linear.orientation = LinearLayout.VERTICAL
                     linear.setPadding(50, 50, 50, 50)
-                    val mensaje = TextView(requireContext()).apply { text = "¿Estas Seguro de Pagar la compra?" }
+                    val mensaje = TextView(requireContext()).apply { text = "¿Estas Seguro de Solicitar la compra?" }
                     linear.addView(mensaje)
-                    setTitle("Confirmar Pago")
+                    setTitle("Confirmar Compra")
                     setView(linear)
                     setPositiveButton("Pagar") { _, _ ->
                         // Vaciar variables de carrito guardar carrito en Firebase
@@ -82,11 +82,6 @@ class CarritoFragment : Fragment() {
                         lifecycleScope.launch {
                             val resutadoPago = realizarPagoDeProductos()
                             if(resutadoPago){
-                                
-                                abrirVentanaMercadoPago(carrito)
-
-                                //Disminuir el stock de los productos comprados
-                                disminuirStockProductos(carrito.detalleProductos!!)
 
                                 // Limpiar el carrito
                                 carrito.detalleProductos = mutableListOf<DetalleCarrito>()
@@ -114,45 +109,9 @@ class CarritoFragment : Fragment() {
         return binding.root
     }
 
-    private fun abrirVentanaMercadoPago(carrito: Carrito) {
 
-    }
 
-    private suspend fun disminuirStockProductos(detalleProductos: List<DetalleCarrito>) {
 
-        for (element in detalleProductos){
-            //verificar si el producto existe
-            val ref = FirebaseDatabase.getInstance().getReference("productos")
-                .child(element.productoId.toString())
-                .child("stock")
-
-                ref.runTransaction( object : Transaction.Handler {
-                        override fun doTransaction(currentData: MutableData): Transaction.Result {
-                            val stockActual = currentData.getValue(Int::class.java) ?: return Transaction.success(currentData)
-
-                            val nuevoStock = stockActual - element.cantidad!!
-                            if(nuevoStock < 0){
-                                return Transaction.abort()
-                            }
-                            currentData.value = nuevoStock
-                            return Transaction.success(currentData)
-                        }
-
-                        override fun onComplete(
-                            error: DatabaseError?,
-                            committed: Boolean,
-                            currentData: DataSnapshot?
-                        ) {
-                            if (committed) {
-                                Log.d("Firebase", "Stock actualizado correctamente")
-                            } else {
-                                Log.w("Firebase", "No se pudo actualizar el stock: ${error?.message}")
-                            }
-                        }
-                    }
-                )
-        }
-    }
 
     private fun cargarLista(){
         val usuario = FirebaseAuth.getInstance().currentUser
@@ -310,7 +269,7 @@ class CarritoFragment : Fragment() {
             id = "",
             total = carritoPreCompra.total,
             uidUsuario = uid,
-            estado = "Pagado",
+            estado = "Falta Pago",
             fechaCompra = System.currentTimeMillis(),
             detalleCompras = detalleCompras
         )

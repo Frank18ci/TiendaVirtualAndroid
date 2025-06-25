@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Compra(
     @DocumentId
-    val id: String = "",
+    var id: String = "",
     val uidUsuario: String = "",
     val detalleCompras: List<DetalleCompra> = emptyList(),
     val total: Double = 0.0,
