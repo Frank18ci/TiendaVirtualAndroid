@@ -34,7 +34,7 @@ class PedidosRealizadosFragment : Fragment() {
         }
         binding.rvOrdenes.layoutManager = LinearLayoutManager(requireContext())
 
-        var listaCompras = mutableListOf<Compra>()
+        val listaCompras = mutableListOf<Compra>()
 
         val uid = FirebaseAuth.getInstance().currentUser!!.uid
         FirebaseFirestore.getInstance().collection("pedidos").whereEqualTo("uidUsuario", uid).get().addOnSuccessListener { snapshot ->
@@ -42,7 +42,9 @@ class PedidosRealizadosFragment : Fragment() {
                 val compra = snap.toObject(Compra::class.java)
                 listaCompras.add(compra)
             }
-            binding.rvOrdenes.adapter = ComprasAdapter(listaCompras)
+            if(listaCompras.size > 0){
+                binding.rvOrdenes.adapter = ComprasAdapter(listaCompras)
+            }
         }.addOnFailureListener {
             Toast.makeText(requireContext(), "Error al obtener las ordenes realizadas", Toast.LENGTH_LONG).show()
         }

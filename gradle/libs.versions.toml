@@ -13,6 +13,10 @@ firebaseDatabaseKtx = "21.0.0"
 uiGraphicsAndroid = "1.8.2"
 firebaseAuthKtx = "23.2.1"
 firebaseFirestoreKtx = "25.1.4"
+retrofitV="2.9.0"
+converterGsonV= "2.9.0"
+okhttpV="4.9.1"
+browserV="1.4.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -27,7 +31,10 @@ firebase-database-ktx = { group = "com.google.firebase", name = "firebase-databa
 androidx-ui-graphics-android = { group = "androidx.compose.ui", name = "ui-graphics-android", version.ref = "uiGraphicsAndroid" }
 firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
-
+retrofit = {group="com.squareup.retrofit2", name="retrofit", version.ref="retrofitV"}
+converterGson = {group="com.squareup.retrofit2", name="converter-gson", version.ref="converterGsonV"}
+okhttp3= {group="com.squareup.okhttp3", name="okhttp", version.ref="okhttpV"}
+browser= {group="androidx.browser", name="browser", version.ref="browserV"}
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
