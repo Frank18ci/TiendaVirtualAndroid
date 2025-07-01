@@ -48,7 +48,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val navigationView: NavigationView = binding.navView
         navigationView.setNavigationItemSelectedListener(this)
 
-//------------Para que se muestre informacion del usuario uwu-------------------------------------------------//
+//------------Para que se muestre informacion del usuario-------------------------------------------------//
         val headerView = binding.navView.getHeaderView(0)
         val nombreUsuarioTextView = headerView.findViewById<TextView>(R.id.nav_header_textView)
 
@@ -123,6 +123,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             R.id.nav_lateral_salir_de_cuenta -> {
                 FirebaseAuth.getInstance().signOut() // Cierra la sesión
+
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish() // Opcional: cierra la actividad actual

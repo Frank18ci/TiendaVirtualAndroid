@@ -72,11 +72,11 @@ class DetallePedidoRealizadoFragment : Fragment() {
         binding.tvEstadoV.text = compra.estado
 
 
-        // Color sucess #388E3C, Color pending #1976D2
+        // Color success #388E3C, Color pending #1976D2
         val color: Int
         if(compra.estado == "Pagado"){
             color = ContextCompat.getColor(binding.root.context, R.color.color_success)
-            binding.btnRealizarPago.isEnabled = true
+            binding.btnRealizarPago.isEnabled = false
         } else{
             color = ContextCompat.getColor(binding.root.context, R.color.color_info)
             binding.btnRealizarPago.isEnabled = true
@@ -190,7 +190,9 @@ class DetallePedidoRealizadoFragment : Fragment() {
             compra = snapshot.toObject(Compra::class.java)
             compra?.let {
                 cargarValores(it)
-                disminuirStockProductos(it.detalleCompras)
+                if(compra?.estado == "Pagado") {
+                    disminuirStockProductos(it.detalleCompras)
+                }
             }
         }.addOnFailureListener {
             Toast.makeText(requireContext(), "Error al cargar compra", Toast.LENGTH_SHORT).show()

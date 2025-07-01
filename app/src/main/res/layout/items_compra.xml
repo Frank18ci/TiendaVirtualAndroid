@@ -11,16 +11,25 @@
     android:layout_width="match_parent"
     android:padding="8dp"
     android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/textCodigo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Codigo: 123456"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="S/. 500"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textCodigo"
+        tools:text="S/. 500" />
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/mdDividor"

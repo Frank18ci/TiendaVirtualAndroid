@@ -36,10 +36,14 @@ class RegisterFragment : Fragment() {
         binding.tietFechaNacimiento.setOnClickListener {
             mostrarDatePicker()
         }
+        binding.tvVolverInicio.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
+
         return binding.root
     }
 
-    fun registrarUsuario() {
+    private fun registrarUsuario() {
         val nombres = binding.tietNombres.text.toString().trim()
         val apellidos = binding.tietApellidos.text.toString().trim()
         val correo = binding.tiCorreo.text.toString().trim()
