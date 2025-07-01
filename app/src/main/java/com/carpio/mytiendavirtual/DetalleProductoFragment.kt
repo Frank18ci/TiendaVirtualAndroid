@@ -61,109 +61,112 @@ class DetalleProductoFragment : Fragment() {
             }
         })
 
-        database.getReference("productos").child(id?:"")
-            .get().addOnSuccessListener {
-            val producto = it.getValue(Producto::class.java)
-            if (producto != null) {
-                val nombreCategoria: String = listCategory.filter { it.id == producto.categoriaId }.map { it.nombre }.firstOrNull() ?: "Sin Categoria"
+        val ref = database.getReference("productos").child(id?:"")
+
+            ref.addValueEventListener(object: ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val producto = snapshot.getValue(Producto::class.java)
+                    if (producto != null) {
+                        val nombreCategoria: String = listCategory.filter { it.id == producto.categoriaId }.map { it.nombre }.firstOrNull() ?: "Sin Categoria"
 
 
-                val productoDto = ProductoDTO(producto.id, nombreCategoria, producto.descripcion, producto.etiquetas, producto.marca, producto.porcentajeDescuento, producto.nombre, producto.precio, producto.precioFinal, producto.valoracionPromedio, producto.stock, producto.imagenUrl)
+                        val productoDto = ProductoDTO(producto.id, nombreCategoria, producto.descripcion, producto.etiquetas, producto.marca, producto.porcentajeDescuento, producto.nombre, producto.precio, producto.precioFinal, producto.valoracionPromedio, producto.stock, producto.imagenUrl)
 
-                binding.tvNombreProducto.text = productoDto.nombre
-                binding.tvPrecio.text = "S/. ${productoDto.precioFinal}"
-                Glide.with(binding.ivProducto.context)
-                    .load(productoDto.imagenUrl)
-                    .into(binding.ivProducto)
-                binding.tvCategoria.text = productoDto.categoria
-                binding.tvDescripcion.text = productoDto.descripcion ?: "Descripción no disponible"
-                binding.tvDescuentoPorcentaje.text = "${productoDto.porcentajeDescuento}% OFF"
-                binding.tvPrecioAnterior.text = "S/. ${productoDto.precio}"
-                binding.tvPrecioAnterior.paintFlags = binding.tvPrecioAnterior.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                        binding.tvNombreProducto.text = productoDto.nombre
+                        binding.tvPrecio.text = "S/. ${productoDto.precioFinal}"
+                        Glide.with(binding.ivProducto.context)
+                            .load(productoDto.imagenUrl)
+                            .into(binding.ivProducto)
+                        binding.tvCategoria.text = productoDto.categoria
+                        binding.tvDescripcion.text = productoDto.descripcion ?: "Descripción no disponible"
+                        binding.tvDescuentoPorcentaje.text = "${productoDto.porcentajeDescuento}% OFF"
+                        binding.tvPrecioAnterior.text = "S/. ${productoDto.precio}"
+                        binding.tvPrecioAnterior.paintFlags = binding.tvPrecioAnterior.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
 
-                binding.tvCantidad.text = "Cantidad: ${productoDto.stock ?: 0}"
+                        binding.tvCantidad.text = "Cantidad: ${productoDto.stock ?: 0}"
 
-                binding.rvEtiquetas.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-                binding.rvEtiquetas.adapter = EtiquetasProductosAdapter(productoDto.etiquetas?: listOf())
-                binding.rvEtiquetas.setHasFixedSize(true)
+                        binding.rvEtiquetas.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                        binding.rvEtiquetas.adapter = EtiquetasProductosAdapter(productoDto.etiquetas?: listOf())
+                        binding.rvEtiquetas.setHasFixedSize(true)
 
-                binding.tvCantidadElegida.text = 1.toString();
-                binding.tvAumentarCantidadElegida.setOnClickListener {
-                    if(binding.tvCantidadElegida.text.toString().toInt() <= (productoDto.stock ?: 0)){
-                        binding.tvCantidadElegida.text = (binding.tvCantidadElegida.text.toString().toInt() + 1).toString()
-                    }
-                }
-                binding.tvDisminuirCantidadElegida.setOnClickListener {
-                    if (binding.tvCantidadElegida.text.toString().toInt() > 1) {
-                        binding.tvCantidadElegida.text = (binding.tvCantidadElegida.text.toString().toInt() - 1).toString()
-                    }
-                }
-
-                //Agregar al carrito
-                binding.btnAgregarCarrito.setOnClickListener {
-                    val usuario = FirebaseAuth.getInstance().currentUser
-                    var uid = ""
-                    if (usuario != null) {
-                        uid = usuario.uid
-                    }
-                    val cantidadElegida = binding.tvCantidadElegida.text.toString().toInt()
-                    if (cantidadElegida > (productoDto.stock ?: 0)) {
-                        Toast.makeText(requireContext(), "No hay suficientes unidades en stock", Toast.LENGTH_SHORT).show()
-                        return@setOnClickListener
-                    }
-                    val productoPrecioFinal = productoDto.precioFinal ?: 0.0
-                    val montoCarrito = productoPrecioFinal  * cantidadElegida
-                    val detalleCarrito = DetalleCarrito(
-                        productoId = productoDto.id,
-                        cantidad = cantidadElegida,
-                        monto = montoCarrito
-                    )
-                    val carrito = Carrito(
-                        uid = uid,
-                        detalleProductos = mutableListOf(detalleCarrito),
-                        total = (productoDto.precioFinal ?: 0.0) * cantidadElegida,
-                    )
-                    val databaseFirestore = FirebaseFirestore.getInstance()
-                    databaseFirestore.collection("carritos").document(uid)
-                        .get().addOnSuccessListener { document ->
-                            if (document.exists()) {
-                                // Si el carrito ya existe, actualizamos
-                                databaseFirestore.collection("carritos").document(uid).update(
-                                    "detalleProductos", FieldValue.arrayUnion(detalleCarrito),
-                                    "total", FieldValue.increment((productoDto.precioFinal ?: 0.0) * cantidadElegida)
-                                )
-                                    .addOnSuccessListener {
-                                        Toast.makeText(
-                                            requireContext(),
-                                            "Producto agregado al carrito",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-                            } else {
-                                databaseFirestore.collection("carritos").document(uid)
-                                    .set(carrito)
-                                    .addOnSuccessListener {
-                                        Toast.makeText(
-                                            requireContext(),
-                                            "Producto agregado al carrito",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
+                        binding.tvCantidadElegida.text = 1.toString();
+                        binding.tvAumentarCantidadElegida.setOnClickListener {
+                            if(binding.tvCantidadElegida.text.toString().toInt() <= (productoDto.stock ?: 0)){
+                                binding.tvCantidadElegida.text = (binding.tvCantidadElegida.text.toString().toInt() + 1).toString()
                             }
-                        }.addOnFailureListener { e ->
-                            Log.e("Error al agregar al carrito", e.message.toString())
-                            Toast.makeText(requireContext(), "Error al agregar al carrito", Toast.LENGTH_SHORT).show()
                         }
+                        binding.tvDisminuirCantidadElegida.setOnClickListener {
+                            if (binding.tvCantidadElegida.text.toString().toInt() > 1) {
+                                binding.tvCantidadElegida.text = (binding.tvCantidadElegida.text.toString().toInt() - 1).toString()
+                            }
+                        }
+
+                        //Agregar al carrito
+                        binding.btnAgregarCarrito.setOnClickListener {
+                            val usuario = FirebaseAuth.getInstance().currentUser
+                            var uid = ""
+                            if (usuario != null) {
+                                uid = usuario.uid
+                            }
+                            val cantidadElegida = binding.tvCantidadElegida.text.toString().toInt()
+                            if (cantidadElegida > (productoDto.stock ?: 0)) {
+                                Toast.makeText(requireContext(), "No hay suficientes unidades en stock", Toast.LENGTH_SHORT).show()
+                                return@setOnClickListener
+                            }
+                            val productoPrecioFinal = productoDto.precioFinal ?: 0.0
+                            val montoCarrito = productoPrecioFinal  * cantidadElegida
+                            val detalleCarrito = DetalleCarrito(
+                                productoId = productoDto.id,
+                                cantidad = cantidadElegida,
+                                monto = montoCarrito
+                            )
+                            val carrito = Carrito(
+                                uid = uid,
+                                detalleProductos = mutableListOf(detalleCarrito),
+                                total = (productoDto.precioFinal ?: 0.0) * cantidadElegida,
+                            )
+                            val databaseFirestore = FirebaseFirestore.getInstance()
+                            databaseFirestore.collection("carritos").document(uid)
+                                .get().addOnSuccessListener { document ->
+                                    if (document.exists()) {
+                                        // Si el carrito ya existe, actualizamos
+                                        databaseFirestore.collection("carritos").document(uid).update(
+                                            "detalleProductos", FieldValue.arrayUnion(detalleCarrito),
+                                            "total", FieldValue.increment((productoDto.precioFinal ?: 0.0) * cantidadElegida)
+                                        )
+                                            .addOnSuccessListener {
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    "Producto agregado al carrito",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+                                    } else {
+                                        databaseFirestore.collection("carritos").document(uid)
+                                            .set(carrito)
+                                            .addOnSuccessListener {
+                                                Toast.makeText(
+                                                    requireContext(),
+                                                    "Producto agregado al carrito",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+                                    }
+                                }.addOnFailureListener { e ->
+                                    Log.e("Error al agregar al carrito", e.message.toString())
+                                    Toast.makeText(requireContext(), "Error al agregar al carrito", Toast.LENGTH_SHORT).show()
+                                }
+                        }
+
+                    } else {
+                        binding.tvNombreProducto.text = "Producto no encontrado"
+                    }
                 }
 
-            } else {
-                binding.tvNombreProducto.text = "Producto no encontrado"
-            }
-        }.addOnFailureListener {
-            binding.tvNombreProducto.text = "Error al cargar el producto"
-        }
-
-
+                override fun onCancelled(error: DatabaseError) {
+                    binding.tvNombreProducto.text = "Error al cargar el producto"
+                }
+            })
         binding.ivImagenBack.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }

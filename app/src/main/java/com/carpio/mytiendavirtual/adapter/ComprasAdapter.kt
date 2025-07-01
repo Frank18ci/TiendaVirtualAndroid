@@ -26,6 +26,7 @@ class ComprasAdapter(private val listaCompras : MutableList<Compra>) : Adapter<C
     class ComprasViewHolder(view: View) : ViewHolder(view) {
         val binding = ItemsCompraBinding.bind(view)
         fun render(compra: Compra){
+            binding.textCodigo.text = "Codigo: ${compra.id}"
             binding.textTotal.text = "S/. ${compra.total}"
             binding.tvEstado.text = compra.estado
 

@@ -22,12 +22,12 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.mainContainFragment, LoadingFragment())
-        .commit()
+            .commitAllowingStateLoss()
         lifecycleScope.launch {
             delay(3000)
             supportFragmentManager.beginTransaction()
                 .replace(R.id.mainContainFragment, LoginFragment())
-                .commit()
+                .commitAllowingStateLoss()
         }
     }
 }

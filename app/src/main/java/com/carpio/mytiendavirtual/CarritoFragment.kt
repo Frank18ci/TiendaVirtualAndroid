@@ -15,7 +15,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.carpio.mytiendavirtual.adapter.CarritoDetalleProductoAdapter
 import com.carpio.mytiendavirtual.databinding.FragmentCarritoBinding
 import com.carpio.mytiendavirtual.models.Carrito
@@ -27,8 +26,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.MutableData
-import com.google.firebase.database.Transaction
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -44,7 +41,7 @@ import kotlin.coroutines.suspendCoroutine
 
 class CarritoFragment : Fragment() {
 
-    lateinit var carrito : Carrito
+    private lateinit var carrito : Carrito
 
     lateinit var binding : FragmentCarritoBinding
     override fun onCreateView(
@@ -64,6 +61,8 @@ class CarritoFragment : Fragment() {
 
 
         cargarLista()
+
+
         binding.BtnPagar.setOnClickListener {
             if (carrito.detalleProductos.isNullOrEmpty()) {
                 Toast.makeText(requireContext(), "El carrito está vacío", Toast.LENGTH_SHORT).show()
@@ -75,9 +74,9 @@ class CarritoFragment : Fragment() {
                     linear.setPadding(50, 50, 50, 50)
                     val mensaje = TextView(requireContext()).apply { text = "¿Estas Seguro de Solicitar la compra?" }
                     linear.addView(mensaje)
-                    setTitle("Confirmar Compra")
+                    setTitle("Confirmar Pedido")
                     setView(linear)
-                    setPositiveButton("Pagar") { _, _ ->
+                    setPositiveButton("Confirmar") { _, _ ->
                         // Vaciar variables de carrito guardar carrito en Firebase
 
 
@@ -123,11 +122,34 @@ class CarritoFragment : Fragment() {
         if (usuario != null) {
             uid = usuario.uid
         }
-        val database = FirebaseFirestore.getInstance().collection("carritos")
-        database.document(uid).get().addOnSuccessListener {
-            if(it != null && it.exists()) {
-                carrito = it.toObject(Carrito::class.java)!!
-                if (carrito != null) {
+        if(uid.isNotEmpty()){
+            val database = FirebaseFirestore.getInstance().collection("carritos")
+            database.document(uid).get().addOnSuccessListener {
+                if(!it.exists()){
+                    // Si el carrito no existe, creamos uno nuevo
+                    carrito = Carrito(
+                        uid = uid,
+                        detalleProductos = mutableListOf(),
+                        total = 0.0
+                    )
+                    binding.tvTotal.text = "Total S/. ${carrito.total}"
+                    binding.rvCarrito.adapter = CarritoDetalleProductoAdapter(
+                        carrito.detalleProductos ?: mutableListOf(),
+                        {},
+                        {}
+                    )
+                    database.document(uid).set(carrito)
+                        .addOnSuccessListener {
+                            Log.d("Carrito", "Carrito creado correctamente")
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e("Carrito", "Error al crear el carrito: ${e.message}")
+                        }
+                    return@addOnSuccessListener
+                }
+
+                if(it != null && it.exists()) {
+                    carrito = it.toObject(Carrito::class.java)!!
                     binding.tvTotal.text = "Total S/. ${carrito.total}"
                     binding.rvCarrito.adapter = carrito.detalleProductos?.let { it1 ->
                         CarritoDetalleProductoAdapter(
@@ -170,23 +192,17 @@ class CarritoFragment : Fragment() {
                 } else {
                     Toast.makeText(
                         requireContext(),
-                        "Carrito vacío",
+                        "Carrito no encontrado",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-            } else {
+            }.addOnFailureListener {
                 Toast.makeText(
                     requireContext(),
-                    "Carrito no encontrado",
+                    "Error al cargar el carrito",
                     Toast.LENGTH_SHORT
                 ).show()
             }
-        }.addOnFailureListener {
-            Toast.makeText(
-                requireContext(),
-                "Error al cargar el carrito",
-                Toast.LENGTH_SHORT
-            ).show()
         }
     }
 
@@ -204,14 +220,16 @@ class CarritoFragment : Fragment() {
         if (usuario != null) {
             uid = usuario.uid
         }
-        val database = FirebaseFirestore.getInstance().collection("carritos")
-        database.document(uid).set(carrito)
-            .addOnSuccessListener {
-                Log.d("Carrito", "Carrito guardado correctamente")
-            }
-            .addOnFailureListener { e ->
-                Log.e("Carrito", "Error al guardar el carrito: ${e.message}")
-            }
+        if(uid.isNotEmpty() && ::carrito.isInitialized){
+            val database = FirebaseFirestore.getInstance().collection("carritos")
+            database.document(uid).set(carrito)
+                .addOnSuccessListener {
+                    Log.d("Carrito", "Carrito guardado correctamente")
+                }
+                .addOnFailureListener { e ->
+                    Log.e("Carrito", "Error al guardar el carrito: ${e.message}")
+                }
+        }
     }
 
     private suspend fun buscarProductoPorId(productoId: String): Producto? = suspendCoroutine { continuation ->
@@ -284,12 +302,12 @@ class CarritoFragment : Fragment() {
                 .add(compra)
                 .await()
             withContext(Dispatchers.Main) {
-                Toast.makeText(requireContext(), "Compra realizada con éxito", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Pedido realizada con éxito", Toast.LENGTH_SHORT).show()
             }
             true
         } catch (e: Exception) {
             withContext(Dispatchers.Main) {
-                Toast.makeText(requireContext(), "Error al realizar la compra", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Error al realizar el pedido", Toast.LENGTH_SHORT).show()
             }
             false
         }

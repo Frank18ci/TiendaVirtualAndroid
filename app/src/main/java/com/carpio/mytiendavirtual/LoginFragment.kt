@@ -11,15 +11,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.carpio.mytiendavirtual.databinding.FragmentLoginBinding
 import com.carpio.mytiendavirtual.models.Categoria
+import com.carpio.mytiendavirtual.models.Usuario
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.values
+import com.google.firebase.firestore.FirebaseFirestore
 
 class LoginFragment : Fragment() {
 
@@ -105,12 +108,39 @@ class LoginFragment : Fragment() {
     private fun firebaseAuthWithGoogle(account: GoogleSignInAccount) {
         val cred = GoogleAuthProvider.getCredential(account.idToken, null)
         auth.signInWithCredential(cred)
-            .addOnSuccessListener { irAHome() }
+            .addOnSuccessListener { d ->
+                d.user?.let { guardarUsuarioEnBD(it) }
+                irAHome()
+            }
             .addOnFailureListener { e ->
                 Toast.makeText(context, "Firebase-Google error: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
+    private fun guardarUsuarioEnBD(user: FirebaseUser) {
+        val db = FirebaseFirestore.getInstance()
 
+        val usuario = Usuario(
+            uid = user.uid,
+            nombre = user.displayName ?: "",
+            correo = user.email ?: "",
+            numero = "",
+            direccion= "",
+        )
+
+        db.collection("usuarios").document(user.uid).set(usuario)
+            .addOnSuccessListener {
+                Toast.makeText(requireContext(), "Registro exitoso", Toast.LENGTH_SHORT)
+                    .show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(
+                    requireContext(),
+                    "Error al guardar en Firestore: ${e.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+                e.printStackTrace()
+            }
+    }
 
     private fun irAHome() {
         startActivity(Intent(requireContext(), HomeActivity::class.java))
