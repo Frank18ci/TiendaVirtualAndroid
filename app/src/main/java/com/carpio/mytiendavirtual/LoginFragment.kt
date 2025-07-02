@@ -126,20 +126,26 @@ class LoginFragment : Fragment() {
             numero = "",
             direccion= "",
         )
+        db.collection("usuarios").document(user.uid).get().addOnSuccessListener {
+            if(it.exists()){
+                return@addOnSuccessListener
+            } else {
+                db.collection("usuarios").document(user.uid).set(usuario)
+                    .addOnSuccessListener {
+                        Toast.makeText(requireContext(), "Registro exitoso", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(
+                            requireContext(),
+                            "Error al guardar en Firestore: ${e.message}",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        e.printStackTrace()
+                    }
+            }
+        }
 
-        db.collection("usuarios").document(user.uid).set(usuario)
-            .addOnSuccessListener {
-                Toast.makeText(requireContext(), "Registro exitoso", Toast.LENGTH_SHORT)
-                    .show()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(
-                    requireContext(),
-                    "Error al guardar en Firestore: ${e.message}",
-                    Toast.LENGTH_LONG
-                ).show()
-                e.printStackTrace()
-            }
     }
 
     private fun irAHome() {

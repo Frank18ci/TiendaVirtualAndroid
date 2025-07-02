@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.RoundedCorner
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
@@ -24,7 +23,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.carpio.mytiendavirtual.adapter.EtiquetasProductosAdapter
 import com.carpio.mytiendavirtual.models.Carrito
 import com.carpio.mytiendavirtual.models.DetalleCarrito
-import com.google.common.collect.Lists
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -63,7 +61,7 @@ class DetalleProductoFragment : Fragment() {
 
         val ref = database.getReference("productos").child(id?:"")
 
-            ref.addValueEventListener(object: ValueEventListener {
+            ref.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val producto = snapshot.getValue(Producto::class.java)
                     if (producto != null) {
