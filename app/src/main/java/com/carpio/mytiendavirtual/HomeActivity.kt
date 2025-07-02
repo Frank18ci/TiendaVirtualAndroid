@@ -14,6 +14,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.carpio.mytiendavirtual.databinding.ActivityHomeBinding
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 
@@ -124,9 +126,29 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_lateral_salir_de_cuenta -> {
                 FirebaseAuth.getInstance().signOut() // Cierra la sesión
 
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish() // Opcional: cierra la actividad actual
+                val googleSignIn = GoogleSignIn.getLastSignedInAccount(this)
+                if(googleSignIn != null) {
+                    //Cerrar sesión de Google si está iniciada
+                    val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestEmail()
+                        .build()
+                    val googleSignInClient = GoogleSignIn.getClient(this, gso)
+                    googleSignInClient.signOut().addOnCompleteListener {
+                        googleSignInClient.revokeAccess().addOnCompleteListener {
+                            //Cuando se haya cerrado la sesión de Google, redirige a MainActivity
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                    }
+                } else {
+                    // Si no hay sesión de Google, simplemente redirige a MainActivity
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+
+
             }
 
         }

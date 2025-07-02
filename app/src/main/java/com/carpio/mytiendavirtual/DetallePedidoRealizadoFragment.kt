@@ -1,6 +1,5 @@
 package com.carpio.mytiendavirtual
 
-import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.os.Bundle
@@ -18,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.carpio.mytiendavirtual.adapter.DetalleComprasAdapter
 import com.carpio.mytiendavirtual.databinding.FragmentDetallePedidoRealizadoBinding
 import com.carpio.mytiendavirtual.models.Compra
-import com.carpio.mytiendavirtual.models.DetalleCarrito
 import com.carpio.mytiendavirtual.models.DetalleCompra
 import com.carpio.mytiendavirtual.serviceMercadoPago.ApiService
 import com.carpio.mytiendavirtual.serviceMercadoPago.model.ResponseHttp
@@ -58,11 +56,6 @@ class DetallePedidoRealizadoFragment : Fragment() {
 
         cargarValores(compra)
 
-
-
-
-
-
         return binding.root
     }
 
@@ -84,9 +77,9 @@ class DetallePedidoRealizadoFragment : Fragment() {
         binding.tvEstadoV.setTextColor(color)
 
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        binding.tvFechaV.text = sdf.format(Date(compra!!.fechaCompra))
+        binding.tvFechaV.text = sdf.format(Date(compra.fechaCompra))
         binding.rvDetallePedido.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvDetallePedido.adapter = DetalleComprasAdapter(compra!!.detalleCompras.toMutableList())
+        binding.rvDetallePedido.adapter = DetalleComprasAdapter(compra.detalleCompras.toMutableList())
 
 
         binding.ivImagenBack.setOnClickListener {
@@ -105,7 +98,7 @@ class DetallePedidoRealizadoFragment : Fragment() {
             "productos" to compra.detalleCompras,
             "currentId" to compra.uidUsuario
         )
-        println("Mapa de datos para converiter ${datosEnviar}")
+        println("Mapa de datos para converiter $datosEnviar")
 
         //Convertir a cadena de texto en json
         val gson = Gson()
@@ -125,9 +118,9 @@ class DetallePedidoRealizadoFragment : Fragment() {
                     println("PreferenceId ${response.body()?.preferenceId}")
                     println("Init point ${response.body()?.init_point}")
 
-                    val init_point = response.body()?.init_point.toString()
+                    val initPoint = response.body()?.init_point.toString()
 
-                    abrirNavegadorCustomTab(init_point)
+                    abrirNavegadorCustomTab(initPoint)
 
                 } else if(response.code() == 500){
                     println("Errro en el servidor ${response.errorBody()?.toString()}")
@@ -140,9 +133,9 @@ class DetallePedidoRealizadoFragment : Fragment() {
         })
     }
 
-    fun abrirNavegadorCustomTab(init_point: String){
+    fun abrirNavegadorCustomTab(initPoint: String){
         val customTabsIntent = CustomTabsIntent.Builder().build()
-        customTabsIntent.launchUrl(requireContext(), Uri.parse(init_point))
+        customTabsIntent.launchUrl(requireContext(), Uri.parse(initPoint))
     }
 
     override fun onResume() {
@@ -184,7 +177,7 @@ class DetallePedidoRealizadoFragment : Fragment() {
             )
         }
     }
-    fun realizarPeticionObtenerCompra(compraId: String): Compra?{
+    private fun realizarPeticionObtenerCompra(compraId: String): Compra?{
         var compra: Compra? = null
         FirebaseFirestore.getInstance().collection("pedidos").document(compraId).get().addOnSuccessListener { snapshot ->
             compra = snapshot.toObject(Compra::class.java)
